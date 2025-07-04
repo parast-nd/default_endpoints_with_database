@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .profile-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .profile-data {
+            margin-bottom: 15px;
+        }
+        .profile-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+        .profile-actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>OAuth 2.0 User Profile</h1>
+            <p>Authentication successful!</p>
+        </div>
+        
+        <div th:if="${userInfo != null}">
+            <div class="profile-data" th:if="${userInfo['sub'] != null}">
+                <span class="profile-label">User ID (sub):</span>
+                <span th:text="${userInfo['sub']}">ID</span>
+            </div>
+            <div class="profile-data" th:if="${userInfo['error'] != null}">
+                <span class="profile-label">Error:</span>
+                <span th:text="${userInfo['error']}">Error</span>
+            </div>
+            <!-- Display all available user information dynamically -->
+            <div th:each="entry : ${userInfo}" th:unless="${entry.key == 'sub' || entry.key == 'error'}" class="profile-data">
+                <span class="profile-label" th:text="${#strings.capitalize(entry.key)}">Key</span>
+                <span th:text="${entry.value}">Value</span>
+            </div>
+            <div class="profile-data">
+                <span class="profile-label">Authenticated:</span>
+                <span>Yes</span>
+            </div>
+            <div class="profile-data">
+                <span class="profile-label">Auth Method:</span>
+                <span>OAuth 2.0</span>
+            </div>
+        </div>
+        
+        <div th:if="${userInfo == null}">
+            <p>No user information available. Please try logging in again.</p>
+        </div>
+        
+        <div class="profile-actions">
+            <a th:href="@{/}" class="btn">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

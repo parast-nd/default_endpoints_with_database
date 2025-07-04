@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization Server</title>
+    <style>/* Your existing styles */</style>
+</head>
+<body>
+<div class="container">
+    <h1>Authorization Server</h1>
+    <p>You have successfully logged in.</p>
+
+    <div th:if="${user}">
+        <h3>Authentication Details</h3>
+        <p><strong>Username:</strong> <span th:text="${user}">user</span></p>
+        <p><strong>Authorities:</strong> <span th:text="${authorities}">authorities</span></p>
+    </div>
+
+    <p>The OAuth flow with code exchange happens when a client application redirects to:</p>
+    <code>/oauth2/authorize?client_id=client&redirect_uri=http://localhost:8080/login/oauth2/code/custom&response_type=code&scope=openid</code>
+
+    <p>To test the full OAuth flow, visit your client application at:</p>
+    <a class="btn" href="http://localhost:8080">Go to Client Application</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: authorization-server
+  security:
+    oauth2:
+      resourceserver:
+        opaque-token:
+          introspection-uri: http://localhost:8080/oauth2/introspect
+          client-id: client123
+          client-secret: ""

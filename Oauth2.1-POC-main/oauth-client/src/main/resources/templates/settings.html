@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - OAuth 2.1 PKCE Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-shield-alt me-2"></i>OAuth 2.1 PKCE Demo
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+            <a class="nav-link" href="/profile">Profile</a>
+            <a class="nav-link" href="/repos">Data</a>
+            <a class="nav-link active" href="/settings">Settings</a>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button class="btn nav-link text-white" type="submit" style="border: none; background: none;">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h1><i class="fas fa-cog me-2"></i>Application Settings</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-user me-2"></i>Account Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Logged in as:</strong> <span th:text="${user ?: 'N/A'}">N/A</span></p>
+                    <p><strong>Username:</strong> <span th:text="${username ?: 'N/A'}">N/A</span></p>
+                    <p><strong>OAuth Provider:</strong> Custom Authorization Server</p>
+                    <p><strong>Authentication Method:</strong> OAuth 2.1 with PKCE</p>
+                    <p><strong>Server:</strong> localhost:9000</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-palette me-2"></i>Application Preferences</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="theme" class="form-label">Theme</label>
+                            <select class="form-select" id="theme">
+                                <option selected>Light</option>
+                                <option>Dark</option>
+                                <option>Auto</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="notifications">
+                            <label class="form-check-label" for="notifications">
+                                Enable notifications
+                            </label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="analytics">
+                            <label class="form-check-label" for="analytics">
+                                Allow analytics
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Save Preferences
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-shield-alt me-2"></i>Security Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Secure Connection:</strong> Your session is protected with OAuth 2.1 and PKCE.
+                    </div>
+
+                    <h6>Security Features:</h6>
+                    <ul>
+                        <li><i class="fas fa-check text-success me-2"></i>OAuth 2.1 Protocol</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Proof Key for Code Exchange (PKCE)</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Secure Token Storage</li>
+                        <li><i class="fas fa-check text-success me-2"></i>HTTPS Redirect URIs</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Custom Authorization Server</li>
+                    </ul>
+
+                    <form th:action="@{/logout}" method="post" class="mt-3">
+                        <button class="btn btn-danger" type="submit">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout & Revoke Access
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

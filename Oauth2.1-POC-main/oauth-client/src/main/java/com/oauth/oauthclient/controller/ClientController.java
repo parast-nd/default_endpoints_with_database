@@ -50,7 +50,7 @@ public class ClientController {
             "?response_type=code" +
             "&client_id=client123" +
             "&redirect_uri=http://localhost:8081/callback" +
-            "&scope=profile" +
+            "&scope=profile offline_access" +
             "&state=" + pkceData.state() +
             "&code_challenge=" + pkceData.codeChallenge() +
             "&code_challenge_method=S256";

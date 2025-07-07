@@ -10,8 +10,11 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DelegatingOAuth2AuthorizationService implements OAuth2AuthorizationService {
+    private static final Logger logger = LoggerFactory.getLogger(DelegatingOAuth2AuthorizationService.class);
     private final OAuth2AuthorizationService delegate;
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -48,13 +51,16 @@ public class DelegatingOAuth2AuthorizationService implements OAuth2Authorization
         // Copy refresh token
         if (authorization.getRefreshToken() != null) {
             var token = authorization.getRefreshToken().getToken();
-            RefreshToken entity = new RefreshToken();
+            logger.info("Saving refresh token: {} issued at: {} expires at: {}", token.getTokenValue(), token.getIssuedAt(), token.getExpiresAt());
+            RefreshToken entity = new RefreshToken();   
             entity.setId(authorization.getId());
             entity.setTokenValue(token.getTokenValue());
             entity.setIssuedAt(token.getIssuedAt());
             entity.setExpiresAt(token.getExpiresAt());
             entity.setTokenMetadata("");
             refreshTokenRepository.save(entity);
+        } else {
+            logger.info("No refresh token present in this authorization");
         }
         // Copy authorization code
         var codeToken = authorization.getToken(org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationCode.class);

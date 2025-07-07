@@ -91,6 +91,7 @@ public class SecurityConfig {
                             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                             .redirectUri(client.getRedirectUri())
                             .scope("profile")
+                            .scope("offline_access") // Allow offline_access for refresh tokens
                             .tokenSettings(TokenSettings.builder()
                                     .accessTokenFormat(org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat.REFERENCE)
                                     .accessTokenTimeToLive(Duration.ofMinutes(30))
